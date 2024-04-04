@@ -172,10 +172,12 @@ class Server(object):
         self.s.listen(1) # Pone el socket en escucha ,con capacidad de un host
         self.c_socket,self.c_address = self.s.accept() # .connect() devuelve una tupla con el cliente y la direccion client,client_address
         self.connected = True
+        # Una vez se incia la conexion derivarsela a un objeto de tipo connection
+        # A cada objeto connection le doy un thread mientras el server sigue escuchando
         while self.connected:
-            request = self.c_socket.recv(4086).decode("ascii") # Receives the request from the client
+            request = self.c_socket.recv(4096).decode("ascii") # Receives the request from the client
             self.request_handler(request)
-        print("WARNING: server wiil keep up listening")
+        print("WARNING: server will keep up listening")
         self.serve()
 
 def main():
